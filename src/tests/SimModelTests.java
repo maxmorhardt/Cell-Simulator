@@ -108,54 +108,6 @@ class SimModelTests {
 		}
 	}
 
-	/**
-	 * Tests the creation of a new Forest model using some basic parameters.
-	 * 
-	 */
-	@Test
-	void test_GOLSimModelCreation() {
-		System.out.println("Model creation test");
-
-		Model test = new GOLModel();
-		test.resize(10, 10);
-		test.makeModel();
-
-		System.out.println(test.toString());
-
-		boolean statement1 = test.toString()
-				.equals("There are 100 trees left in the forest.\nOf those, 1 are burning.\n");
-		assertTrue(statement1);
-	}
-
-	/**
-	 * Tests the creation of a new Forest model and using the model to cycle all
-	 * burning trees using 1 burning tree to start.
-	 * 
-	 */
-	@Test
-	void test_GOLSimModelCycling() {
-		System.out.println("Model cycling test");
-
-		Model test = new GOLModel();
-		test.resize(10, 10);
-		test.makeModel();
-
-		int cycles = 1;
-		for (int i = 0; i < cycles; i++) {
-			test.updateModel();
-		}
-
-		System.out.println(test.toString());
-
-		boolean statement1 = test.toString()
-				.equals("There are 99 trees left in the forest.\nOf those, 4 are burning.\n");
-		boolean statement2 = test.toString()
-				.equals("There are 99 trees left in the forest.\nOf those, 3 are burning.\n");
-		boolean statement3 = test.toString()
-				.equals("There are 99 trees left in the forest.\nOf those, 2 are burning.\n");
-		assertTrue(statement1 || statement2 || statement3);
-	}
-
 	@Test
 	void test_GOLSimModelParameters() {
 		System.out.println("Parameter test");
@@ -172,61 +124,6 @@ class SimModelTests {
 		test.makeModel();
 
 		System.out.println(test.toString());
-	}
-	
-	@Test
-	void test_RPSSimModelUpdate() {
-		RPSModel testGrid = new RPSModel();
-		testGrid.resize(6,6);
-		testGrid.makeModel();
-		testGrid.updateModel();
-		RPSCell[][] expectedGrid = new RPSCell[6][6];
-		int middleOfRows = 3;
-		int middleOfColumns = 3;
-		for (int i = 0; i < expectedGrid.length; i++) {
-			for (int j = 0; j < expectedGrid[0].length; j++) {
-				// Upper half
-				if (i < middleOfRows) {
-					if (j < middleOfColumns) {
-						expectedGrid[i][j] = new RPSCell(Color.RED, false);
-					}
-					else if (j >= middleOfColumns && i != 1){
-						expectedGrid[i][j] = new RPSCell(Color.BLUE, false);
-					}
-					if (j == middleOfColumns && i == 1) {
-						expectedGrid[i][j] = new RPSCell(Color.RED, false);
-					}
-				}
-				// Lower half
-				// 4th row
-				else if (i == 3){
-					if(j == 0) {
-						expectedGrid[i][j] = new RPSCell(Color.RED, false);
-					}
-					else if (j >= middleOfColumns) {
-						expectedGrid[i][j] = new RPSCell(Color.BLUE, false);
-					}
-					else {
-						expectedGrid[i][j] = new RPSCell(Color.WHITE, false);
-					}
-				}
-				//lower half 
-				// 5th row
-				else if(i == 4) {
-					if (j > middleOfColumns) {
-						expectedGrid[i][j] = new RPSCell(Color.BLUE, false);
-					}
-					else {
-						expectedGrid[i][j] = new RPSCell(Color.WHITE, false);
-					}
-				}
-				// 6th row
-				else {
-					expectedGrid[i][j] = new RPSCell(Color.WHITE, false);
-				}
-			}
-		}
-		assertEquals("RPSSimModelUpdatedCorrectly", expectedGrid, testGrid);
 	}
 	
 }
